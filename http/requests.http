@@ -1,0 +1,53 @@
+### Talita Cumi API. Run with the IntelliJ HTTP client or VS Code REST Client.
+### Start the API with ADMIN_TOKEN=dev-admin for the admin requests.
+@api = http://localhost:8080
+@admin = dev-admin
+
+### 1. A therapist signs up (hidden from search until verified)
+POST {{api}}/api/therapists
+Content-Type: application/json
+
+{
+  "account": { "name": "Marta Oliveira", "email": "marta@example.com", "phone": "(11) 98765-4321", "password": "segredo123" },
+  "crp": "06/123456",
+  "profile": {
+    "approach": "Terapia Cognitivo-Comportamental",
+    "bio": "Acolho mulheres em momentos de ansiedade, luto e recomeço.",
+    "faithNote": "Integro a fé cristã quando a cliente deseja, sempre respeitando seu tempo.",
+    "topics": ["ANXIETY", "GRIEF", "FAITH_CRISIS"],
+    "city": "São Paulo",
+    "modality": "BOTH",
+    "sessionMinutes": 50,
+    "priceCents": 15000
+  }
+}
+
+### 2. Who is waiting for verification
+GET {{api}}/api/admin/therapists/pending
+X-Admin-Token: {{admin}}
+
+### 3. Publish her profile (paste the id from step 1 or 2)
+@therapistId = 00000000-0000-0000-0000-000000000000
+POST {{api}}/api/admin/therapists/{{therapistId}}/verify
+X-Admin-Token: {{admin}}
+
+### 4. Search
+GET {{api}}/api/therapists?topic=ANXIETY&modality=ONLINE
+
+### 5. Free times on a day (after she sets her hours in /painel)
+GET {{api}}/api/therapists/{{therapistId}}/slots?date=2026-11-02
+
+### 6. A client signs up (the response sets the session cookie used by the next request)
+POST {{api}}/api/accounts
+Content-Type: application/json
+
+{ "name": "Ana", "email": "ana@example.com", "phone": "(21) 99876-5432", "password": "segredo123" }
+
+### 7. Book (startsAt from step 5)
+POST {{api}}/api/appointments
+Content-Type: application/json
+
+{ "therapistId": "{{therapistId}}", "startsAt": "2026-11-02T12:00:00Z", "note": "Tenho tido crises de ansiedade.", "wantsFaith": true }
+
+### 8. My sessions
+GET {{api}}/api/appointments/me

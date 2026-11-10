@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "api",
+      "runtimeExecutable": "C:/Users/babis/Projects/talitaCume/talitaCume/gradlew.bat",
+      "runtimeArgs": ["-p", "C:/Users/babis/Projects/talitaCume/talitaCume", "bootRun", "--args=--app.admin-token=dev-admin"],
+      "port": 8080
+    },
+    {
+      "name": "web",
+      "runtimeExecutable": "npm.cmd",
+      "runtimeArgs": ["--prefix", "C:/Users/babis/Projects/talitaCume/talitaCume/web", "run", "dev"],
+      "port": 3000
+    }
+  ]
+}
