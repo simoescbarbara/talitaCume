@@ -106,3 +106,18 @@ export function fetchMyAvailability(): Promise<AvailabilityRule[]> {
 export function saveMyAvailability(rules: AvailabilityRule[]): Promise<AvailabilityRule[]> {
   return request<AvailabilityRule[]>("/api/therapists/me/availability", json("PUT", { rules }));
 }
+
+// Admin calls carry the shared token in a header (never in the URL, so it stays out of logs and history).
+const admin = (token: string): HeadersInit => ({ "X-Admin-Token": token });
+
+/** Therapists waiting for someone to check their CRP. 403 for a wrong token. */
+export function fetchPendingTherapists(token: string): Promise<Therapist[]> {
+  return request<Therapist[]>("/api/admin/therapists/pending", { cache: "no-store", headers: admin(token) });
+}
+
+export function verifyTherapist(id: string, token: string): Promise<Therapist> {
+  return request<Therapist>(`/api/admin/therapists/${encodeURIComponent(id)}/verify`, {
+    method: "POST",
+    headers: admin(token),
+  });
+}

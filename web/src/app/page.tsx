@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { Emblem, Wordmark } from "@/components/brand/Logo";
+import { BlossomSprig, LeafSprig } from "@/components/brand/Botanicals";
+import { BrandLockup, Emblem } from "@/components/brand/Logo";
 import { Icon } from "@/components/brand/Icon";
 import { TherapistCard } from "@/components/TherapistCard";
 import { copy } from "@/lib/copy";
@@ -32,14 +33,10 @@ export default async function HomePage({ searchParams }: Props) {
     <>
       <section className="hero">
         <div className="wrap hero__inner">
-          <div>
-            <p className="eyebrow">{copy.search.eyebrow}</p>
-            <h1 style={{ margin: "0.5rem 0 0" }}>
-              <Wordmark size={2.1} />
+          <div style={{ position: "relative" }}>
+            <h1 style={{ fontWeight: "inherit" }}>
+              <BrandLockup eyebrow={copy.search.eyebrow} tagline={copy.tagline} />
             </h1>
-            <p className="eyebrow" style={{ marginTop: "0.75rem", color: "var(--gold-text)" }}>
-              {copy.tagline}
-            </p>
             <p className="hero__title">{copy.search.title}</p>
             <p className="hero__lead">{copy.search.lead}</p>
 
@@ -78,6 +75,8 @@ export default async function HomePage({ searchParams }: Props) {
             <Emblem size={416} className="hero__emblem" priority />
           </div>
         </div>
+        <LeafSprig className="hero__sprig hero__sprig--leaves" />
+        <BlossomSprig className="hero__sprig hero__sprig--blossoms" />
       </section>
 
       <section className="results-section" aria-labelledby="results-title" id="terapeutas">

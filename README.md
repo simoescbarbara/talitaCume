@@ -81,11 +81,17 @@ Then, to see someone in the search:
 
 `web/` uses the visual identity of the Projeto Talita Cumi emblem (`web/public/brand/talita-cumi-emblema.jpg`):
 
-- Colours: cream paper `#F7F0E7`, olive ink `#4C5034` (the "TALITA" lettering), gold line work `#B38B4D`, sage
-  `#7F866A` and soft washes from the watercolor. Gold is decorative; text that must be read is olive or ink.
+- Story: the emblem moves from dusk to dawn (slate watercolor, then golden light, then blush blossoms). The site
+  follows it: a hero that warms from a slate edge to a golden glow and blush, gold leaves and rose blossoms in line
+  art at its edges (`components/brand/Botanicals.tsx`), and a slate "dusk" footer edged with a gold-to-rose line.
+- Colours, sampled from the emblem: paper `#FCF9F3`, olive `#464B2B` ("TALITA"), rose `#BF7567` ("cumi"),
+  gold `#B8842E` (ring, "PROJETO", "MENINA LEVANTA!"), slate `#2F3236`, glow `#FBE6C2`, blush `#FBEAE3`.
+  Rose and gold in those exact shades are for large script, lines and decoration; small text uses the darker
+  `--rose-text` `#9B5144` and `--gold-text` `#8A5E14` (both above 4.5:1).
 - Type: Cormorant Garamond (the serif of "TALITA"), Allura (the script of "cumi"), Jost in spaced capitals
   ("PROJETO", "MENINA LEVANTA!") and for the interface. All through `next/font/google`.
-- The full emblem appears large on the home page; small places use a live-type wordmark (`components/brand/Logo.tsx`).
+- The full emblem appears large on the home page next to the stacked lettering (`BrandLockup`); small places use the
+  horizontal live-type wordmark (`Wordmark`), both in `components/brand/Logo.tsx`.
 
 The interface is in Brazilian Portuguese; every string lives in `web/src/lib/copy.ts`.
 
