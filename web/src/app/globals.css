@@ -1,31 +1,39 @@
 /*
-  Talita Cumi design tokens, taken from the emblem (public/brand/talita-cumi-emblema.jpg):
-  warm cream paper, olive ink for "TALITA", gold line work for "cumi" and the heart, sage watercolor washes.
-  Gold is decorative: lines, rules and large script. Text that must be read is olive or ink, never light gold.
+  Talita Cumi design tokens, sampled from the emblem (public/brand/talita-cumi-emblema.jpg).
+  The emblem moves from dusk to dawn: slate watercolor on the left, golden light at the heart,
+  blush blossoms on the right. Lettering: olive "TALITA", rose script "cumi", gold "PROJETO" and "MENINA LEVANTA!".
+
+  The exact logo shades (--rose, --gold) are for large script, lines and decoration only.
+  Small text uses the darker --rose-text and --gold-text, which pass 4.5:1 on every background here.
 */
 :root {
-  --cream: #f7f0e7;
-  --paper: #fcf9f4;
-  --olive: #4c5034;
-  --olive-hover: #3c3f28;
-  --sage: #7f866a;
-  --sage-soft: #e6e5d6;
-  --wash: #efe7da;
-  --gold: #b38b4d;
-  --gold-soft: #dcc59c;
-  --gold-text: #7c5a26; /* 5.3:1 on cream, for small gold text */
-  --ink: #34362a;
-  --muted: #5d5f4f; /* 6:1 on cream */
+  --paper: #fcf9f3; /* the emblem's paper */
+  --cream: #f7efe3;
+  --wash: #f6ead9;
+  --glow: #fbe6c2; /* the light around the girl reaching up */
+  --blush: #fbeae3;
+  --rose-soft: #f2c9bf;
+  --rose: #bf7567; /* "cumi" */
+  --rose-text: #9b5144; /* 5.5:1 on paper */
+  --olive: #464b2b; /* "TALITA", 8.7:1 on paper */
+  --olive-hover: #363a1f;
+  --gold: #b8842e; /* the ring and gold leaves */
+  --gold-soft: #e3c48c;
+  --gold-text: #8a5e14; /* "MENINA LEVANTA!", darkened to 5.4:1 */
+  --slate: #2f3236; /* the dusk side */
+  --slate-soft: #8b8f93;
+  --ink: #33352b;
+  --muted: #5d5f4f; /* 6.2:1 on paper */
 
-  --line: rgba(76, 80, 52, 0.16);
-  --field-border: #8d8b78; /* 3.1:1 on paper, the minimum for form controls */
+  --line: rgba(70, 75, 43, 0.15);
+  --field-border: #8d8a7a; /* 3.3:1 on paper, the minimum for form controls */
   --danger: #9f3a2a;
 
   --radius-button: 999px;
   --radius-field: 14px;
   --radius-card: 22px;
-  --shadow-card: 0 1px 0 rgba(76, 80, 52, 0.06), 0 10px 28px rgba(76, 80, 52, 0.07);
-  --shadow-lift: 0 16px 40px rgba(76, 80, 52, 0.13);
+  --shadow-card: 0 1px 0 rgba(70, 75, 43, 0.05), 0 10px 28px rgba(140, 90, 50, 0.08);
+  --shadow-lift: 0 16px 40px rgba(140, 90, 50, 0.16);
 
   --gutter: clamp(1rem, 4.5vw, 3.5rem);
   --max: 76rem;
@@ -53,7 +61,7 @@ body {
   flex-direction: column;
   min-height: 100vh;
   margin: 0;
-  background: var(--cream);
+  background: var(--paper);
   color: var(--ink);
   font-family: var(--font-sans);
   font-size: 1.0625rem;
@@ -110,10 +118,29 @@ textarea {
   text-transform: uppercase;
 }
 
+.eyebrow--gold {
+  color: var(--gold-text);
+}
+
+/* "PROJETO" between two thin gold rules, as in the emblem. */
+.eyebrow--ruled {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.9em;
+}
+
+.eyebrow--ruled::before,
+.eyebrow--ruled::after {
+  content: "";
+  width: 2.5em;
+  height: 1px;
+  background: var(--gold);
+}
+
 .script {
   font-family: var(--font-script);
   font-weight: 400;
-  color: var(--gold);
+  color: var(--rose);
 }
 
 /* ---------- Page frame ---------- */
@@ -187,7 +214,7 @@ textarea {
 }
 
 .account__link:hover:not(:disabled) {
-  background: var(--wash);
+  background: var(--blush);
 }
 
 .account__link--boxed {
@@ -209,9 +236,12 @@ textarea {
   }
 }
 
+/* The dusk side of the emblem, with a thin line of dawn (gold into rose) along the top. */
 .footer {
   margin-top: auto;
-  background: var(--olive);
+  border-top: 3px solid transparent;
+  border-image: linear-gradient(90deg, var(--gold), var(--glow) 45%, var(--rose-soft) 70%, var(--rose)) 1;
+  background: radial-gradient(40rem 18rem at 100% 0%, rgba(191, 117, 103, 0.18), transparent 70%), var(--slate);
   color: var(--paper);
 }
 
@@ -299,12 +329,12 @@ textarea {
   color: var(--danger);
 }
 
-/* A thin gold rule with a heart in the middle, like the emblem's line work. */
+/* A thin gold rule with a rose heart in the middle, like the line under "cumi" in the emblem. */
 .rule {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  color: var(--gold);
+  color: var(--rose);
 }
 
 .rule::before,
@@ -341,7 +371,7 @@ textarea {
 }
 
 .button:disabled {
-  background: var(--sage-soft);
+  background: #ebe5da;
   color: var(--muted);
   cursor: not-allowed;
 }
@@ -353,7 +383,7 @@ textarea {
 }
 
 .button--quiet:hover:not(:disabled) {
-  background: var(--wash);
+  background: var(--blush);
 }
 
 .button--danger {
@@ -410,7 +440,7 @@ textarea {
 select.field__input {
   appearance: none;
   padding-right: 2.5rem;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%234c5034' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23464b2b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 0.9rem center;
 }
@@ -488,12 +518,13 @@ textarea.field__input {
   box-shadow: var(--shadow-card);
 }
 
+/* Topics bloom like the emblem's blossoms: blush fill, rose edge, olive text for contrast. */
 .chip {
   display: inline-block;
   padding: 0.2rem 0.75rem;
-  border: 1px solid var(--gold-soft);
+  border: 1px solid var(--rose-soft);
   border-radius: 999px;
-  background: var(--paper);
+  background: var(--blush);
   color: var(--olive);
   font-size: 0.875rem;
 }
@@ -531,15 +562,15 @@ textarea.field__input {
 }
 
 .topic-picker label:has(input:checked) {
-  border-color: var(--olive);
-  background: var(--wash);
+  border-color: var(--rose);
+  background: var(--blush);
 }
 
 /* ---------- Crisis notice ---------- */
 
 .crisis {
   border-bottom: 1px solid var(--gold-soft);
-  background: var(--wash);
+  background: var(--cream);
   font-size: 0.9375rem;
 }
 
@@ -577,16 +608,51 @@ textarea.field__input {
 
 /* ---------- Home ---------- */
 
+/*
+  Dusk to dawn, like the emblem: a cool slate wash at the left edge, golden light behind the emblem,
+  blush at the right. Kept faint on the left so the olive text stays well above 7:1.
+*/
 .hero {
   position: relative;
   overflow: hidden;
   background:
-    radial-gradient(60rem 30rem at 85% 20%, rgba(127, 134, 106, 0.16), transparent 60%),
-    radial-gradient(40rem 26rem at 5% 100%, rgba(179, 139, 77, 0.14), transparent 60%),
-    var(--cream);
+    radial-gradient(34rem 34rem at 78% 45%, rgba(251, 230, 194, 0.95), transparent 65%),
+    radial-gradient(30rem 40rem at 100% 15%, rgba(242, 201, 191, 0.6), transparent 70%),
+    linear-gradient(90deg, rgba(47, 50, 54, 0.08), transparent 35%),
+    var(--paper);
+}
+
+/* Botanical line art at the edges: gold leaves on the dusk side, rose blossoms on the dawn side. */
+.hero__sprig {
+  position: absolute;
+  pointer-events: none;
+}
+
+.hero__sprig--leaves {
+  left: -1.5rem;
+  bottom: -1rem;
+  width: clamp(7rem, 14vw, 12rem);
+  color: var(--gold);
+  opacity: 0.55;
+}
+
+.hero__sprig--blossoms {
+  right: -1rem;
+  top: 1rem;
+  width: clamp(6rem, 12vw, 10rem);
+  color: var(--rose);
+  opacity: 0.5;
+}
+
+@media (max-width: 55.99rem) {
+  .hero__sprig--leaves {
+    display: none;
+  }
 }
 
 .hero__inner {
+  position: relative;
+  z-index: 1; /* above the botanical sprigs */
   display: grid;
   gap: 2rem;
   align-items: center;
@@ -636,7 +702,7 @@ textarea.field__input {
   width: 100%;
   height: auto;
   border-radius: 50%;
-  box-shadow: 0 0 0 1px var(--gold-soft), 0 20px 50px rgba(76, 80, 52, 0.15);
+  box-shadow: 0 0 0 1px var(--gold-soft), 0 0 60px rgba(251, 230, 194, 0.9), 0 24px 60px rgba(140, 90, 50, 0.18);
 }
 
 @media (max-width: 55.99rem) {
@@ -674,7 +740,7 @@ textarea.field__input {
 
 .results-section {
   padding-block: clamp(2rem, 5vw, 3.5rem);
-  background: var(--paper);
+  background: var(--cream);
   border-block: 1px solid var(--line);
 }
 
@@ -713,7 +779,8 @@ textarea.field__input {
   padding: 1.5rem;
   border: 1px solid var(--line);
   border-radius: var(--radius-card);
-  background: var(--cream);
+  background: var(--paper);
+  box-shadow: var(--shadow-card);
   transition: box-shadow 0.2s, transform 0.2s;
 }
 
@@ -796,7 +863,7 @@ textarea.field__input {
 .how__step::before {
   content: counter(step);
   display: block;
-  color: var(--gold);
+  color: var(--rose);
   font-family: var(--font-script);
   font-size: 3rem;
   line-height: 1;
@@ -883,7 +950,7 @@ textarea.field__input {
 }
 
 .profile__block h2 {
-  color: var(--olive);
+  color: var(--gold-text);
   font-size: 0.8125rem;
   font-weight: 500;
   letter-spacing: 0.24em;
@@ -903,7 +970,7 @@ textarea.field__input {
   padding: 1rem 1.25rem;
   border-left: 3px solid var(--gold);
   border-radius: 0 var(--radius-field) var(--radius-field) 0;
-  background: var(--wash);
+  background: linear-gradient(90deg, var(--glow), var(--paper));
   font-family: var(--font-serif);
   font-size: 1.25rem;
   font-style: italic;
@@ -1086,7 +1153,7 @@ textarea.field__input {
 }
 
 .slot__check {
-  color: var(--gold-soft);
+  color: var(--rose-soft);
 }
 
 .booking__aside {
@@ -1113,7 +1180,8 @@ textarea.field__input {
 }
 
 .summary__when--set {
-  border-left-color: var(--gold);
+  border-left-color: var(--rose);
+  background: var(--blush);
   color: var(--olive);
   font-weight: 500;
 }
@@ -1337,7 +1405,7 @@ textarea.field__input {
 }
 
 .tab[aria-selected="true"] {
-  border-bottom-color: var(--gold);
+  border-bottom-color: var(--rose);
   color: var(--olive);
 }
 
@@ -1378,6 +1446,23 @@ textarea.field__input {
 
 .window__remove {
   min-height: 3.1rem;
+}
+
+/* ---------- Admin ---------- */
+
+.admin {
+  max-width: 52rem;
+}
+
+@media (min-width: 40rem) {
+  .admin__facts {
+    grid-template-columns: 9rem 1fr;
+    column-gap: 1rem;
+  }
+
+  .admin__facts > div {
+    display: contents;
+  }
 }
 
 .panel-actions {

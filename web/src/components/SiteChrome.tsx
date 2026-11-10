@@ -21,7 +21,7 @@ export function SiteHeader() {
   );
 }
 
-/** Olive footer with the verse the project is named after. */
+/** Slate "dusk" footer, edged with a line of dawn, carrying the verse the project is named after. */
 export function SiteFooter() {
   return (
     <footer className="footer">
