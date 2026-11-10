@@ -1,0 +1,33 @@
+spring:
+  application:
+    name: talita-cumi
+  datasource:
+    url: jdbc:postgresql://localhost:5433/talitacume
+    username: talitacume
+    password: talitacume
+  jpa:
+    open-in-view: false
+    # No hibernate.jdbc.time_zone: Instants already go to timestamptz as UTC, and that setting would also shift
+    # LocalTime availability windows by the JVM's offset (19:00 stored as 22:00 on a São Paulo machine).
+    hibernate:
+      ddl-auto: validate
+  mvc:
+    problemdetails:
+      enabled: true
+
+app:
+  # Local time zone used to turn availability rules (08:00-12:00) into instants.
+  timezone: America/Sao_Paulo
+  session:
+    cookie-name: talitacumi_session
+    ttl: 30d
+    # HTTPS-only cookie. Keep false for http://localhost; set APP_SESSION_SECURE_COOKIE=true when deployed.
+    secure-cookie: false
+  # Shared secret for the therapist verification endpoints (header X-Admin-Token). Blank disables them.
+  admin-token: ${ADMIN_TOKEN:}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info

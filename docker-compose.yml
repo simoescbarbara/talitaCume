@@ -1,0 +1,13 @@
+services:
+  postgres:
+    image: postgres:17
+    environment:
+      POSTGRES_DB: talitacume
+      POSTGRES_USER: talitacume
+      POSTGRES_PASSWORD: talitacume
+    # 5433 on the host so it can run next to Meczap's Postgres on 5432.
+    ports: ["5433:5432"]
+    volumes: ["pgdata:/var/lib/postgresql/data"]
+
+volumes:
+  pgdata:
