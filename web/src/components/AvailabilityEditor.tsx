@@ -22,8 +22,8 @@ function isValid(rows: Row[]): boolean {
 
 type Status = "loading" | "idle" | "saving" | "saved" | "invalid" | "error";
 
-/** Weekly windows; the API cuts sessions from them. Saving replaces the whole week. */
-export function AvailabilityEditor({ sessionMinutes }: { sessionMinutes: number }) {
+/** Weekly windows; the API cuts sessions from them. Saving replaces the whole week, then calls onSaved. */
+export function AvailabilityEditor({ sessionMinutes, onSaved }: { sessionMinutes: number; onSaved?: () => void }) {
   const uid = useId();
   const [rows, setRows] = useState<Row[]>([]);
   const [status, setStatus] = useState<Status>("loading");
@@ -66,6 +66,7 @@ export function AvailabilityEditor({ sessionMinutes }: { sessionMinutes: number 
       setRows(fromApi(saved));
       setNextKey(saved.length);
       setStatus("saved");
+      onSaved?.();
     } catch (error) {
       setStatus(error instanceof ClientApiError && error.status === 400 ? "invalid" : "error");
     }
