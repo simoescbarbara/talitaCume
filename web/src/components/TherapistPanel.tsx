@@ -22,7 +22,19 @@ export function TherapistPanel() {
   const { account } = useAccount();
   const [tab, setTab] = useState<Tab>("agenda");
   const [data, setData] = useState<Loaded>({ status: "loading" });
+  const [hoursSaved, setHoursSaved] = useState(false);
   const isTherapist = account.status === "signed-in" && account.account.role === "THERAPIST";
+
+  // After saving the weekly hours, go back to the agenda and reload it.
+  function onHoursSaved() {
+    setHoursSaved(true);
+    setTab("agenda");
+    fetchMyAppointments()
+      .then((appointments) => setData((d) => (d.status === "ready" ? { ...d, appointments } : d)))
+      .catch(() => {
+        // Keep the agenda already on screen; it is still correct apart from bookings made just now.
+      });
+  }
 
   useEffect(() => {
     if (!isTherapist) return;
@@ -100,7 +112,10 @@ export function TherapistPanel() {
             id={`${uid}-tab-${t}`}
             aria-selected={tab === t}
             aria-controls={`${uid}-panel`}
-            onClick={() => setTab(t)}
+            onClick={() => {
+              setTab(t);
+              setHoursSaved(false);
+            }}
             type="button"
           >
             {copy.panel.tabs[t]}
@@ -109,6 +124,7 @@ export function TherapistPanel() {
       </div>
 
       <div className="tab-panel" role="tabpanel" id={`${uid}-panel`} aria-labelledby={`${uid}-tab-${tab}`}>
+        <div aria-live="polite">{tab === "agenda" && hoursSaved && <p className="form-ok">{copy.availability.saved}</p>}</div>
         {tab === "agenda" &&
           (appointments.length === 0 ? (
             <p className="status">{copy.panel.agendaEmpty}</p>
@@ -124,7 +140,7 @@ export function TherapistPanel() {
               />
             </>
           ))}
-        {tab === "availability" && <AvailabilityEditor sessionMinutes={profile.sessionMinutes} />}
+        {tab === "availability" && <AvailabilityEditor sessionMinutes={profile.sessionMinutes} onSaved={onHoursSaved} />}
         {tab === "profile" && (
           <ProfileEditor profile={profile} onSaved={(saved) => setData({ ...data, profile: saved })} />
         )}
